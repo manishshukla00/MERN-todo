@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1","start": "concurrently \"npm run start:client\" \"npm run start:server\"",
     "start:client": "cd client/todo-app && npm start",
     "start:server": "nodemon server/index.js",
-   "build":"npm install cd server && npm install --prefix cd client/todo-app && npm run build --prefix cd client/todo-app"
+   "build":"npm install cd server && npm install cd client/todo-app && npm run build cd client/todo-app"
   },
   "author": "",
   "license": "ISC",
