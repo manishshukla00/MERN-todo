@@ -2,9 +2,12 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import router from "./router/todo-router.js";
+import path from "path";
 
 const app = express();
 const port = 5000;
+
+const __dirname = path.resolve();
 
 app.use(cors());
 
@@ -17,37 +20,13 @@ mongoose
     console.log(error.message);
   });
 
-// const todoSchema = new mongoose.Schema({
-//   text: String,
-//   completed: Boolean,
-// });
-
-// const Todo = mongoose.model("Todo", todoSchema);
-
 app.use(express.json());
-
-// app.get("/api/", async (req, res) => {
-//   const todos = await Todo.find();
-//   res.json(todos);
-// });
-
-// app.post("/api/", async (req, res) => {
-//   const newTodo = new Todo(req.body);
-//   await newTodo.save();
-//   res.json(newTodo);
-// });
 app.use("/api/", router);
 
-app.delete("/api/todos/:id", async (req, res) => {
-  const todoId = req.params.id;
+app.use(express.static(path.join(__dirname, "/client/build")));
 
-  try {
-    await Todo.findOneAndDelete(todoId);
-    res.json({ success: true, message: "Todo deleted successfully" });
-  } catch (error) {
-    console.error("Error deleting todo:", error);
-    res.status(500).json({ success: false, message: "Internal server error" });
-  }
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "build", index.html));
 });
 
 app.listen(5000, () => {
